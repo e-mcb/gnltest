@@ -4,94 +4,66 @@
 
 int main(void)
 {
-  int    fd;
+  int    fd[1024];
   char  *next_line;
-  int  count;
+  static int i = 0;
+  static int j = 0;
 
-  /*count = 0;
-  fd = open("1char.txt", O_RDONLY);
-  while (1)
-  {
-    next_line = get_next_line(fd);
-    if (next_line == NULL)
+  // fd[i] = open("1char.txt", O_RDONLY); //file with only 1 character
+  // i++;
+  // fd[i] = open("empty.txt", O_RDONLY); // empty file
+  fd[i] = open("longline.txt", O_RDONLY); //a single line
+  printf("%d\n", fd[i]);
+  i++;
+  fd[i] = open("random.txt", O_RDONLY); //lorem ipsum
+  printf("%d\n", fd[i]);
+  // fd = open("newlines.txt", O_RDONLY); //bunch of newlines
+  // fd = open("noperms.txt", O_RDONLY); // no reading perms
+  //fd = 0; //stdin
+
+  
+//   while (1)
+//   {
+//     next_line = get_next_line(fd[j]);
+//     if (next_line == NULL)
+// 	{
+// 		printf("%s", next_line);
+// 		break ;
+// 	}
+//     printf("%s", next_line);
+// 	free(next_line);
+//     next_line = NULL;
+//     j++;
+//     if (i == j)
+//     	j = 0;
+//   }
+//   j = 0;
+//   while (i != j)
+//   {
+//   	close(fd[j]);
+//   	j++;
+//   } 
+//   return (0);
+// }
+
+	next_line = (get_next_line(fd[j]));
+	printf("%s", next_line);
+	j++;
+  while (next_line)
 	{
-		printf("[%d]:%s\n", count, next_line);
-		break ;
-	}
-    count++;
-    printf("[%d]:%s\n", count, next_line);
+		next_line = (get_next_line(fd[j]));
+		printf("%s", next_line);
 	free(next_line);
     next_line = NULL;
-  }
-  close(fd);*/ //file with only 1 character
-
-   /* count = 0;
-  fd = open("empty.txt", O_RDONLY);
-  while (1)
+    j++;
+    if (i == j)
+    	j = 0;
+	}
+  j = 0;
+  while (i != j)
   {
-    next_line = get_next_line(fd);
-    if (next_line == NULL)
-  {
-    printf("[%d]:%s\n", count, next_line);
-    break ;
-  }
-    count++;
-    printf("[%d]:%s\n", count, next_line);
-  free(next_line);
-    next_line = NULL;
-  }
-  close(fd);*/ //empty file
-
-  //   count = 0;
-  // fd = open("longline.txt", O_RDONLY);
-  // while (1)
-  // {
-  //   next_line = get_next_line(fd);
-  //   if (next_line == NULL)
-  // {
-  //   printf("%s\n", next_line);
-  //   break ;
-  // }
-  //   count++;
-  //   printf("[%d]:%s\n", count, next_line);
-  // free(next_line);
-  //   next_line = NULL;
-  // }
-  // close(fd); // a ton of character with no newline
-
-  count = 0;
-  fd = open("random.txt", O_RDONLY);
-  while (777)
-  {
-    next_line = get_next_line(fd);
-    if (next_line == NULL)
-  {
-    printf("%s\n", next_line);
-    break ;
-  }
-    count++;
-    printf("[%d]:%s\n", count, next_line);
-  free(next_line);
-    next_line = NULL;
-  }
-  close(fd); //lorem ipsum generator
-
-  /*  count = 0;
-  fd = open("newlines.txt", O_RDONLY);
-  while (1)
-  {
-    next_line = get_next_line(fd);
-    if (next_line == NULL)
-  {
-    printf("[%d]:%s\n", count, next_line);
-    break ;
-  }
-    count++;
-    printf("[%d]:%s\n", count, next_line);
-  free(next_line);
-    next_line = NULL;
-  }
-  close(fd);*/ //just a bunch of newlines
-
+  	close(fd[j]);
+  	j++;
+  } 
   return (0);
 }
